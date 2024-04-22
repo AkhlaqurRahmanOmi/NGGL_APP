@@ -4,14 +4,12 @@ import LoginScreen from './Screens/Login';
 import AttendanceScreen from './Screens/Attendence';
 import ProfileScreen from './Screens/Profile';
 import OtherCostScreen from './Screens/OtherCost';
+import MainNavigator from './Navigation/MainNavigator';
 
 export default function App() {
   return (
     <>
-    {/* <LoginScreen/> */}
-    {/* <AttendanceScreen/> */}
-    {/* <ProfileScreen/> */}
-    <OtherCostScreen/>
+    <MainNavigator/>
     </>
   );
 }
