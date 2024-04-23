@@ -4,12 +4,23 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { MaterialIcons } from "@expo/vector-icons";
 
+import LoginScreen from "../Screens/Login";
 import AttendanceScreen from "../Screens/Attendence";
 import OtherCostScreen from "../Screens/OtherCost";
 import ProfileScreen from "../Screens/Profile";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
+const AuthStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="Login"
+      component={LoginScreen}
+      options={{ headerShown: false }}
+    />
+  </Stack.Navigator>
+);
 
 const AttendanceStack = () => (
   <Stack.Navigator>
@@ -29,30 +40,39 @@ const ProfileStack = () => (
   </Stack.Navigator>
 );
 
+const MainNavigator = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+
+          if (route.name === "Attendance") {
+            iconName = "access-time";
+          } else if (route.name === "OtherCost") {
+            iconName = "attach-money";
+          } else if (route.name === "Profile") {
+            iconName = "person";
+          }
+
+          return <MaterialIcons name={iconName} size={size} color={color} />;
+        },
+      })}
+    >
+      <Tab.Screen name="Attendance" component={AttendanceStack} />
+      <Tab.Screen name="OtherCost" component={OtherCostStack} />
+      <Tab.Screen name="Profile" component={ProfileStack} />
+    </Tab.Navigator>
+  );
+};
+
 const Navigator = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ color, size }) => {
-            let iconName;
-
-            if (route.name === "Attendance") {
-              iconName = "access-time";
-            } else if (route.name === "OtherCost") {
-              iconName = "attach-money";
-            } else if (route.name === "Profile") {
-              iconName = "person";
-            }
-
-            return <MaterialIcons name={iconName} size={size} color={color} />;
-          },
-        })}
-      >
-        <Tab.Screen name="Attendance" component={AttendanceStack} />
-        <Tab.Screen name="OtherCost" component={OtherCostStack} />
-        <Tab.Screen name="Profile" component={ProfileStack} />
-      </Tab.Navigator>
+    <NavigationContainer options={{ headerShown: false }}>
+      <Stack.Navigator options={{ headerShown: false }}>
+        {/* <Stack.Screen name="Auth" component={AuthStack} /> */}
+        <Stack.Screen name="Main" component={MainNavigator} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
