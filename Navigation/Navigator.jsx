@@ -8,6 +8,7 @@ import LoginScreen from "../Screens/Login";
 import AttendanceScreen from "../Screens/Attendence";
 import OtherCostScreen from "../Screens/OtherCost";
 import ProfileScreen from "../Screens/Profile";
+import SignupScreen from "../Screens/Signup";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -17,6 +18,11 @@ const AuthStack = () => (
     <Stack.Screen
       name="Login"
       component={LoginScreen}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name="Signup"
+      component={SignupScreen}
       options={{ headerShown: false }}
     />
   </Stack.Navigator>
@@ -70,7 +76,7 @@ const Navigator = () => {
   return (
     <NavigationContainer options={{ headerShown: false }}>
       <Stack.Navigator options={{ headerShown: false }}>
-        {/* <Stack.Screen name="Auth" component={AuthStack} /> */}
+        <Stack.Screen name="Auth" component={AuthStack} />
         <Stack.Screen name="Main" component={MainNavigator} />
       </Stack.Navigator>
     </NavigationContainer>

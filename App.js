@@ -5,11 +5,13 @@ import AttendanceScreen from "./Screens/Attendence";
 import ProfileScreen from "./Screens/Profile";
 import OtherCostScreen from "./Screens/OtherCost";
 import Navigator from "./Navigation/Navigator";
+import SignupScreen from "./Screens/Signup";
 
 export default function App() {
   return (
     <>
       <Navigator />
+      {/* <SignupScreen /> */}
     </>
   );
 }
