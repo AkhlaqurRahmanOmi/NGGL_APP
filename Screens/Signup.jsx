@@ -8,6 +8,7 @@ import {
   Alert,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { useNavigation } from "@react-navigation/native";
 
 const SignupScreen = () => {
   const [firstName, setFirstName] = useState("");
@@ -18,25 +19,28 @@ const SignupScreen = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [joinDateInput, setjoinDateInput] = useState("");
 
+  const navigation = useNavigation();
+
   const handleSignup = async () => {
     try {
       const signupData = {
         first_name: firstName,
         last_name: lastName,
         email: email,
-        hire_date: joinDateInput
-          ? joinDateInput
-          : joinDate.toISOString().split("T")[0],
+        password: password,
+        hire_date: joinDateInput || joinDate.toISOString().split("T")[0],
         // Add other fields as needed
       };
 
-      const response = await fetch("http://localhost:3000/employees", {
+      console.log(signupData);
+      const response = await fetch("http://192.168.40.175:3000/employees", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(signupData),
       });
+      console.log("Signup Data:", signupData);
 
       if (response.ok) {
         setFirstName("");
@@ -44,13 +48,16 @@ const SignupScreen = () => {
         setEmail("");
         setPassword("");
         setJoinDate(new Date());
-        setJoinDateInput("");
+        setjoinDateInput("");
+
+        navigation.navigate("Login");
 
         Alert.alert("Success", "Signup successful!");
       } else {
         throw new Error("Failed to signup");
       }
     } catch (error) {
+      // console.log("signupData");
       console.error("Error signing up:", error);
       Alert.alert("Error", "Failed to signup. Please try again.");
     }

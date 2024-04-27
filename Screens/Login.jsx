@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -15,16 +16,47 @@ const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    // Implement login logic here
-    console.log("Email:", email);
-    console.log("Password:", password);
-    // Example: Call API to authenticate user
+  const handleLogin = async () => {
+    try {
+      const loginData = {
+        email: email,
+        password: password,
+      };
+      console.log(loginData);
+      const response = await fetch("http://192.168.40.175:3000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginData),
+      });
+
+      if (response.ok) {
+        // Reset form fields after successful login
+        setEmail("");
+        setPassword("");
+
+        // Navigate to the home screen or any other screen upon successful login
+        // Replace 'Home' with the name of your desired screen
+        navigation.navigate("Main");
+
+        // Show success message
+        Alert.alert("Success", "Login successful!");
+      } else {
+        throw new Error("Failed to login");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      Alert.alert("Error", "Failed to login. Please try again.");
+    }
   };
   const handleSignUp = () => {
     navigation.navigate("Signup");
   };
 
+  const handleLeave = () => {
+    navigation.navigate("Leave");
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Employee Attendance System</Text>
@@ -48,6 +80,9 @@ const LoginScreen = () => {
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={handleSignUp}>
         <Text style={styles.buttonText}>SigUp</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={handleLeave}>
+        <Text style={styles.buttonText}>Leave</Text>
       </TouchableOpacity>
     </View>
   );

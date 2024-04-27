@@ -9,6 +9,7 @@ import AttendanceScreen from "../Screens/Attendence";
 import OtherCostScreen from "../Screens/OtherCost";
 import ProfileScreen from "../Screens/Profile";
 import SignupScreen from "../Screens/Signup";
+import Leave from "../Screens/Leave";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -25,6 +26,11 @@ const AuthStack = () => (
       component={SignupScreen}
       options={{ headerShown: false }}
     />
+    {/* <Stack.Screen
+      name="Leave"
+      component={Leave}
+      options={{ headerShown: false }}
+    /> */}
   </Stack.Navigator>
 );
 
@@ -74,10 +80,19 @@ const MainNavigator = () => {
 
 const Navigator = () => {
   return (
-    <NavigationContainer options={{ headerShown: false }}>
-      <Stack.Navigator options={{ headerShown: false }}>
-        <Stack.Screen name="Auth" component={AuthStack} />
-        <Stack.Screen name="Main" component={MainNavigator} />
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Auth"
+          component={AuthStack}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Main"
+          component={MainNavigator}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Leave" component={Leave} />
       </Stack.Navigator>
     </NavigationContainer>
   );
